@@ -80,7 +80,7 @@ public class PortalRendererListener implements Listener {
         for (int i = 0; i <= 5; i++) {
             String server = borderPortals.getServerAt(location.clone().add(dx * i, 0, dz * i));
             if (!stringEquals(server, myServer)) {
-                Location signLoc = location.clone().add(dx * i, 1, dz * i);
+                Location signLoc = location.clone().add(dx * (i - 1), 1, dz * (i - 1));
                 Block signBlock = signLoc.getBlock();
                 if (!signBlock.getType().isOccluding()) {
                     player.sendBlockChange(signLoc, createWallSign(dir));
