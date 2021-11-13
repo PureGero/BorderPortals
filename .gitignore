@@ -11,6 +11,7 @@ eclipse
 bin
 *~
 fileTemplates
+.theia
 
 build
 target

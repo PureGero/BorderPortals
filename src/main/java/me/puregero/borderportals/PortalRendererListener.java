@@ -1,4 +1,4 @@
-package me.puregero.serversplitter;
+package me.puregero.borderportals;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,10 +14,10 @@ import java.util.Set;
 
 public class PortalRendererListener implements Listener {
 
-    private final ServerSplitter serverSplitter;
+    private final BorderPortals borderPortals;
 
-    public PortalRendererListener(ServerSplitter serverSplitter) {
-        this.serverSplitter = serverSplitter;
+    public PortalRendererListener(BorderPortals borderPortals) {
+        this.borderPortals = borderPortals;
     }
 
     private HashMap<Player, Set<Block>> renderedPortalBlocks = new HashMap<>();
@@ -29,11 +29,11 @@ public class PortalRendererListener implements Listener {
         if (!event.getTo().getBlock().equals(event.getFrom().getBlock())) {
             currentRenderedBlocks.clear();
 
-            String myServer = serverSplitter.getServerAt(event.getTo());
+            String myServer = borderPortals.getServerAt(event.getTo());
             for (int[] dir : new int[][]{ {1,0}, {-1,0}, {0,1}, {0,-1} }) {
                 int x = dir[0] * 5;
                 int z = dir[1] * 5;
-                String server = serverSplitter.getServerAt(event.getTo().clone().add(x, 0, z));
+                String server = borderPortals.getServerAt(event.getTo().clone().add(x, 0, z));
                 if (!stringEquals(server, myServer)) {
                     renderPortal(event.getPlayer(), event.getTo(), myServer, dir);
                 }
@@ -68,7 +68,7 @@ public class PortalRendererListener implements Listener {
         int dz = dir[1];
 
         for (int i = 0; i <= 5; i++) {
-            if (!stringEquals(serverSplitter.getServerAt(location.clone().add(dx * i, 0, dz * i)), myServer)) {
+            if (!stringEquals(borderPortals.getServerAt(location.clone().add(dx * i, 0, dz * i)), myServer)) {
                 for (int j = -5 + i; j <= 5 - i; j++) {
                     for (int k = -5 + i + Math.abs(j); k <= 5 - i - Math.abs(j); k++) {
                         Location loc = location.clone().add(dx * i + dz * j, k + 1, dz * i + dx * j);

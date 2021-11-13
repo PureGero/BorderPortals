@@ -1,4 +1,4 @@
-package me.puregero.serversplitter;
+package me.puregero.borderportals;
 
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerSplitter extends JavaPlugin {
+public class BorderPortals extends JavaPlugin {
 
     private List<Region> regions = new ArrayList<>();
 

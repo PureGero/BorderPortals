@@ -1,4 +1,4 @@
-package me.puregero.serversplitter;
+package me.puregero.borderportals;
 
 public class Region {
 
