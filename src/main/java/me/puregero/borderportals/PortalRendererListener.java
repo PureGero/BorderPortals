@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Orientable;
 import org.bukkit.block.data.type.WallSign;
@@ -55,7 +56,10 @@ public class PortalRendererListener implements Listener {
                 for (Block block : renderedBlocks) {
                     if (!currentRenderedBlocks.contains(block)) {
                         event.getPlayer().sendBlockChange(block.getLocation(), block.getBlockData());
-                        block.getState().update(true, false);
+                        BlockState state = block.getState();
+                        if (!state.getClass().getSimpleName().equals("CraftBlockState")) {
+                            block.getState().update(true, false);
+                        }
                     }
                 }
             }
