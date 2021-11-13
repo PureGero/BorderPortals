@@ -42,10 +42,10 @@ public class PortalRendererListener implements Listener {
 
             String myServer = borderPortals.getServerAt(event.getTo());
             for (int[] dir : new int[][]{ EAST, WEST, NORTH, SOUTH }) {
-                int x = dir[0] * 5;
-                int z = dir[1] * 5;
-                String server = borderPortals.getServerAt(event.getTo().clone().add(x, 0, z));
-                if (!stringEquals(server, myServer)) {
+                int x = dir[0];
+                int z = dir[1];
+                if (!stringEquals(borderPortals.getServerAt(event.getTo().clone().add(x * 5 + z * 5, 0, z * 5 + x * 5)), myServer)
+                        || !stringEquals(borderPortals.getServerAt(event.getTo().clone().add(x * 5 - z * 5, 0, z * 5 - x * 5)), myServer)) {
                     renderPortal(event.getPlayer(), event.getTo(), myServer, dir);
                 }
             }
@@ -81,20 +81,22 @@ public class PortalRendererListener implements Listener {
         int dx = dir[0];
         int dz = dir[1];
 
-        for (int i = 0; i <= 5; i++) {
-            String server = borderPortals.getServerAt(location.clone().add(dx * (i + 1), 0, dz * (i + 1)));
-            if (!stringEquals(server, myServer)) {
-                Location signLoc = location.clone().add(dx * (i - 1), 1, dz * (i - 1));
-                Block signBlock = signLoc.getBlock();
-                if (!signBlock.getType().isOccluding()) {
-                    player.sendBlockChange(signLoc, createWallSign(dir));
-                    player.sendSignChange(signLoc, new String[]{ "Teleport to", "server", server, "" });
-                    currentRenderedBlocks.add(signBlock);
-                }
+        for (int j = -5; j <= 5; j++) { // Left/right axis
+            for (int i = 0; i <= 5 - Math.abs(j); i++) { // Forward axis
+                String server = borderPortals.getServerAt(location.clone().add(dx * (i + 1) + dz * j, 0, dz * (i + 1) + dx * j));
+                if (!stringEquals(server, myServer)) {
+                    if (j == 0) {
+                        Location signLoc = location.clone().add(dx * (i - 1), 1, dz * (i - 1));
+                        Block signBlock = signLoc.getBlock();
+                        if (!signBlock.getType().isOccluding()) {
+                            player.sendBlockChange(signLoc, createWallSign(dir));
+                            player.sendSignChange(signLoc, new String[]{ "Teleport to", "server", server, "" });
+                            currentRenderedBlocks.add(signBlock);
+                        }
+                    }
 
-                for (int j = -5 + i; j <= 5 - i; j++) {
-                    for (int k = -5 + i + Math.abs(j); k <= 5 - i - Math.abs(j); k++) {
-                        Location loc = location.clone().add(dx * i + dz * j, k + 1, dz * i + dx * j);
+                    for (int y = -5 + i + Math.abs(j); y <= 5 - i - Math.abs(j); y++) {
+                        Location loc = location.clone().add(dx * i + dz * j, y + 1, dz * i + dx * j);
                         Block block = loc.getBlock();
                         if (!block.getType().isOccluding()) {
                             player.sendBlockChange(loc, createPortal(dir));
@@ -102,7 +104,6 @@ public class PortalRendererListener implements Listener {
                         }
                     }
                 }
-                break;
             }
         }
     }
