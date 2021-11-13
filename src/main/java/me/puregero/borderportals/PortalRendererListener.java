@@ -84,7 +84,7 @@ public class PortalRendererListener implements Listener {
                 Block signBlock = signLoc.getBlock();
                 if (!signBlock.getType().isOccluding()) {
                     player.sendBlockChange(signLoc, createWallSign(dir));
-                    player.sendSignChange(signLoc, new String[]{ "Teleport to", "server", server });
+                    player.sendSignChange(signLoc, new String[]{ "Teleport to", "server", server, "" });
                     currentRenderedBlocks.add(signBlock);
                 }
 
