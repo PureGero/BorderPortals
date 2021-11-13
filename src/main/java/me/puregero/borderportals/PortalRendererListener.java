@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Orientable;
-import org.bukkit.block.data.type.Sign;
+import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -104,11 +104,11 @@ public class PortalRendererListener implements Listener {
     }
 
     private BlockData createWallSign(int[] dir) {
-        Sign sign = (Sign) Material.OAK_WALL_SIGN.createBlockData();
-        if (dir == EAST) sign.setRotation(BlockFace.WEST);
-        if (dir == WEST) sign.setRotation(BlockFace.EAST);
-        if (dir == NORTH) sign.setRotation(BlockFace.SOUTH);
-        if (dir == SOUTH) sign.setRotation(BlockFace.NORTH);
+        WallSign sign = (WallSign) Material.OAK_WALL_SIGN.createBlockData();
+        if (dir == EAST) sign.setFacing(BlockFace.WEST);
+        if (dir == WEST) sign.setFacing(BlockFace.EAST);
+        if (dir == NORTH) sign.setFacing(BlockFace.SOUTH);
+        if (dir == SOUTH) sign.setFacing(BlockFace.NORTH);
         return sign;
     }
 
