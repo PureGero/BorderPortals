@@ -82,7 +82,7 @@ public class PortalRendererListener implements Listener {
         int dz = dir[1];
 
         for (int i = 0; i <= 5; i++) {
-            String server = borderPortals.getServerAt(location.clone().add(dx * i, 0, dz * i));
+            String server = borderPortals.getServerAt(location.clone().add(dx * (i + 1), 0, dz * (i + 1)));
             if (!stringEquals(server, myServer)) {
                 Location signLoc = location.clone().add(dx * (i - 1), 1, dz * (i - 1));
                 Block signBlock = signLoc.getBlock();
