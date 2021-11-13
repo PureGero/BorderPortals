@@ -103,6 +103,8 @@ public class PortalRendererListener implements Listener {
                             currentRenderedBlocks.add(block);
                         }
                     }
+                    
+                    break;
                 }
             }
         }
