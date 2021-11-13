@@ -44,8 +44,8 @@ public class PortalRendererListener implements Listener {
             for (int[] dir : new int[][]{ EAST, WEST, NORTH, SOUTH }) {
                 int x = dir[0];
                 int z = dir[1];
-                if (!stringEquals(borderPortals.getServerAt(event.getTo().clone().add(x * 5 + z * 5, 0, z * 5 + x * 5)), myServer)
-                        || !stringEquals(borderPortals.getServerAt(event.getTo().clone().add(x * 5 - z * 5, 0, z * 5 - x * 5)), myServer)) {
+                if (!stringEquals(borderPortals.getServerAt(event.getTo().clone().add(x * 6 + z * 5, 0, z * 6 + x * 5)), myServer)
+                        || !stringEquals(borderPortals.getServerAt(event.getTo().clone().add(x * 6 - z * 5, 0, z * 6 - x * 5)), myServer)) {
                     renderPortal(event.getPlayer(), event.getTo(), myServer, dir);
                 }
             }
