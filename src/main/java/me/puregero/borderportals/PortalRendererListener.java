@@ -82,9 +82,14 @@ public class PortalRendererListener implements Listener {
         int dz = dir[1];
 
         for (int j = -5; j <= 5; j++) { // Left/right axis
-            for (int i = 0; i <= 5 - Math.abs(j); i++) { // Forward axis
+            for (int i = -1; i <= 5 - Math.abs(j); i++) { // Forward axis
                 String server = borderPortals.getServerAt(location.clone().add(dx * (i + 1) + dz * j, 0, dz * (i + 1) + dx * j));
                 if (!stringEquals(server, myServer)) {
+                    if (i == -1) {
+                        // We've gone past the border
+                        break;
+                    }
+
                     if (j == 0) {
                         Location signLoc = location.clone().add(dx * (i - 1), 1, dz * (i - 1));
                         Block signBlock = signLoc.getBlock();
@@ -103,7 +108,7 @@ public class PortalRendererListener implements Listener {
                             currentRenderedBlocks.add(block);
                         }
                     }
-                    
+
                     break;
                 }
             }
